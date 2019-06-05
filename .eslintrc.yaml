@@ -1,0 +1,3 @@
+extends: '@batterii/eslint-config-node'
+rules:
+    no-sync: off # Sync methods are ok here, it's just a generator.

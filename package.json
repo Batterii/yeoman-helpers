@@ -1,0 +1,28 @@
+{
+	"name": "@batterii/yeoman-helpers",
+	"version": "0.0.0",
+	"description": "Helpers for Batterii Yeoman generators",
+	"author": "Batterii, LLC",
+	"license": "UNLICENSED",
+	"repository": "github:Batterii/yeoman-helpers",
+	"files": [
+		"lib"
+	],
+	"main": "lib/index.js",
+	"scripts": {
+		"lint": "eslint .",
+		"lintf": "eslint --fix .",
+		"docs": "documentation build lib/index.js -f html -o docs",
+		"preversion": "npm run lint",
+		"prepublishOnly": "npm run docs && gh-pages -d docs && git push && git push --tags"
+	},
+	"dependencies": {
+		"lodash": "^4.17.11",
+		"yeoman-generator": "^4.0.1"
+	},
+	"devDependencies": {
+		"@batterii/eslint-config-node": "^1.0.5",
+		"documentation": "^11.0.0",
+		"eslint": "^5.16.0"
+	}
+}
