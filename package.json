@@ -1,6 +1,6 @@
 {
 	"name": "@batterii/yeoman-helpers",
-	"version": "0.0.2",
+	"version": "0.0.3",
 	"description": "Helpers for Batterii Yeoman generators",
 	"author": "Batterii, LLC",
 	"license": "UNLICENSED",
