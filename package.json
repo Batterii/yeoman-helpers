@@ -23,6 +23,7 @@
 	"devDependencies": {
 		"@batterii/eslint-config-node": "^1.0.5",
 		"documentation": "^11.0.0",
-		"eslint": "^5.16.0"
+		"eslint": "^5.16.0",
+		"gh-pages": "^2.0.1"
 	}
 }
