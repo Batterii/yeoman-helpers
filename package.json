@@ -12,8 +12,9 @@
 	"scripts": {
 		"lint": "eslint .",
 		"lintf": "eslint --fix .",
-		"docs": "documentation build lib/index.js -f html -o docs",
+		"docs": "documentation build lib/index.js -f md -o docs.md",
 		"preversion": "npm run lint",
+		"version": "npm run docs && git add docs.md",
 		"prepublishOnly": "git push && git push --tags"
 	},
 	"dependencies": {
