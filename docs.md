@@ -4,27 +4,40 @@
 
 -   [Generator][1]
     -   [Parameters][2]
-    -   [destinationName][3]
-    -   [copyTemplate][4]
-        -   [Parameters][5]
-    -   [extendJson][6]
-        -   [Parameters][7]
-    -   [extendTsConfig][8]
-        -   [Parameters][9]
-    -   [extendPackage][10]
-        -   [Parameters][11]
-    -   [addScripts][12]
-        -   [Parameters][13]
+    -   [Examples][3]
+    -   [destinationName][4]
+    -   [copyTemplate][5]
+        -   [Parameters][6]
+    -   [extendJson][7]
+        -   [Parameters][8]
+    -   [extendTsConfig][9]
+        -   [Parameters][10]
+    -   [extendPackage][11]
+        -   [Parameters][12]
+    -   [addScripts][13]
+        -   [Parameters][14]
 
 ## Generator
 
-A replacement [Generator][14]
-class with extensions.
+A replacement [Generator][15]
+class with extensions, to be used as a base class for actual generators.
 
 ### Parameters
 
--   `args` **([string][15] \| [Array][16])** Generator arguments.
--   `opts` **[Object][17]** Generator options.
+-   `args` **([string][16] \| [Array][17])** Generator arguments.
+-   `opts` **[Object][18]** Generator options.
+
+### Examples
+
+```javascript
+const { Generator } = require('@batterii/yeoman-helpers');
+
+class MyGenerator extends Generator {
+	 // Implement your generator here as normal.
+}
+
+module.exports = MyGenerator;
+```
 
 ### destinationName
 
@@ -37,11 +50,11 @@ except it takes relative paths and has sane defaults.
 
 #### Parameters
 
--   `templatePath` **[string][15]** Path to the template file in the templates
+-   `templatePath` **[string][16]** Path to the template file in the templates
       directory.
--   `destinationPath` **[string][15]** Path to the desination
+-   `destinationPath` **[string][16]** Path to the desination
       file in the destination directory. (optional, default `templatePath`)
--   `options` **[Object][17]** Data properties for the
+-   `options` **[Object][18]** Data properties for the
       template. (optional, default `this.options`)
 
 ### extendJson
@@ -52,12 +65,12 @@ function to change merging behavior as needed.
 
 #### Parameters
 
--   `destinationPath` **[string][15]** Path to the json file in the
+-   `destinationPath` **[string][16]** Path to the json file in the
       destination directory.
--   `contents` **[object][17]** Object with properties to merge into the json
+-   `contents` **[object][18]** Object with properties to merge into the json
       file.
--   `customizer` **[function][18]?** A customizer function, as accepted by
-      lodash [mergeWith][19]. If
+-   `customizer` **[function][19]?** A customizer function, as accepted by
+      lodash [mergeWith][20]. If
       omitted, this method will use a customizer that concatenates arrays
       occurring at the same property path, instead of simply overwriting the
       old array values with the new. (optional, default `concatArrays`)
@@ -69,9 +82,9 @@ Adds properties to tsconfig.json at the destination. Behaves exactly as
 
 #### Parameters
 
--   `contents` **[object][17]** Object with properties to merge into the
+-   `contents` **[object][18]** Object with properties to merge into the
      tsconfig.json file.
--   `customizer` **[function][18]?** Customizer function as described in
+-   `customizer` **[function][19]?** Customizer function as described in
       `#extendJson` (optional, default `concatArrays`)
 
 ### extendPackage
@@ -81,9 +94,9 @@ Adds properties to package.json at the destination. Behaves exactly as
 
 #### Parameters
 
--   `contents` **[object][17]** Object with properties to merge into the
+-   `contents` **[object][18]** Object with properties to merge into the
      package.json file.
--   `customizer` **[function][18]?** Customizer function as described in
+-   `customizer` **[function][19]?** Customizer function as described in
       `#extendJson` (optional, default `concatArrays`)
 
 ### addScripts
@@ -94,47 +107,49 @@ name that already exists is appended to the existing script with a
 
 #### Parameters
 
--   `scripts` **[object][17]** Object with script strings to add, keyed by the
+-   `scripts` **[object][18]** Object with script strings to add, keyed by the
       script name.
--   `prepend` **[boolean][20]** Set true to prepend to existing
+-   `prepend` **[boolean][21]** Set true to prepend to existing
       scripts instead of appending. Will likewise use `&&` as a separator. (optional, default `false`)
 
 [1]: #generator
 
 [2]: #parameters
 
-[3]: #destinationname
+[3]: #examples
 
-[4]: #copytemplate
+[4]: #destinationname
 
-[5]: #parameters-1
+[5]: #copytemplate
 
-[6]: #extendjson
+[6]: #parameters-1
 
-[7]: #parameters-2
+[7]: #extendjson
 
-[8]: #extendtsconfig
+[8]: #parameters-2
 
-[9]: #parameters-3
+[9]: #extendtsconfig
 
-[10]: #extendpackage
+[10]: #parameters-3
 
-[11]: #parameters-4
+[11]: #extendpackage
 
-[12]: #addscripts
+[12]: #parameters-4
 
-[13]: #parameters-5
+[13]: #addscripts
 
-[14]: https://yeoman.github.io/generator/Generator.html
+[14]: #parameters-5
 
-[15]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String
+[15]: https://yeoman.github.io/generator/Generator.html
 
-[16]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array
+[16]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String
 
-[17]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object
+[17]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array
 
-[18]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function
+[18]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object
 
-[19]: https://lodash.com/docs/4.17.11#mergeWith
+[19]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function
 
-[20]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean
+[20]: https://lodash.com/docs/4.17.11#mergeWith
+
+[21]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean

@@ -10,15 +10,8 @@ now it is easier and faster to put them here.
 ## `Generator` Replacement Class
 For now this library contains only one item-- a base `Generator` class to use
 as a drop-in replacement for the one exported by
-[yeoman-generator](https://www.npmjs.com/package/yeoman-generator). You can
-inherit from it like so:
+[yeoman-generator](https://www.npmjs.com/package/yeoman-generator).
 
-```js
-const { Generator } = require('@batterii/yeoman-helpers');
 
-class MyGenerator extends Generator {
-	// Implement your generator here as normal.
-}
-
-module.exports = MyGenerator;
-```
+## Documentation
+For information check out the [API docs](./docs.md).
