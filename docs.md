@@ -6,26 +6,28 @@
     -   [Parameters][2]
     -   [Examples][3]
     -   [destinationName][4]
-    -   [copyTemplate][5]
+    -   [optionPrompt][5]
         -   [Parameters][6]
-    -   [extendJson][7]
+    -   [copyTemplate][7]
         -   [Parameters][8]
-    -   [extendTsConfig][9]
+    -   [extendJson][9]
         -   [Parameters][10]
-    -   [extendPackage][11]
+    -   [extendTsConfig][11]
         -   [Parameters][12]
-    -   [addScripts][13]
+    -   [extendPackage][13]
         -   [Parameters][14]
+    -   [addScripts][15]
+        -   [Parameters][16]
 
 ## Generator
 
-A replacement [Generator][15]
+A replacement [Generator][17]
 class with extensions, to be used as a base class for actual generators.
 
 ### Parameters
 
--   `args` **([string][16] \| [Array][17])** Generator arguments.
--   `opts` **[Object][18]** Generator options.
+-   `args` **([string][18] \| [Array][19])** Generator arguments.
+-   `opts` **[Object][20]** Generator options.
 
 ### Examples
 
@@ -43,6 +45,51 @@ module.exports = MyGenerator;
 
 The base name of the destination directory.
 
+### optionPrompt
+
+Register an option/prompt hybrid. Options registered this way can be set
+through Yeoman CLI options and `#composeWith` as normal. The generator
+will start its run by prompting the user for any hybrid options that were
+not provided, in the same order they were registered.
+
+#### Parameters
+
+-   `config` **[Object][20]** 
+    -   `config.name` **[string][18]** The option name. Equivalent to the `name`
+           argument of the `#option` method and the `question.name` argument of
+           the `#prompt` method.
+    -   `config.type` **[string][18]** The prompt type to show, either 'input'
+           or 'confirm'. This will be mapped to a corresponding option type for
+           CLI usage.
+    -   `config.alias` **[string][18]** Short option name for CLI usage.
+           Equivalent to `config.alias` on the `#option` method.
+    -   `config.description` **[string][18]** Full description of the option for
+           the CLI `-h` and `--help` flags. Equivalent to `config.description` on
+           the `#option` method.
+    -   `config.message` **[string][18]** Message to show the user when
+           prompting for the option. This should be similar to
+           `config.description`, except phrased as an instruction or question.
+           Equivalent to the `question.message` argument for the `#prompt`
+           method.
+    -   `config.default` **([function][21] \| [string][18] \| [boolean][22])** A default value for
+            the prompt, or a function that returns or resolves with one.
+            Equivalent to the `question.default` argument for the `#prompt`
+            method, except that a function does not recieve any arguments.
+    -   `config.validate` **[function][21]** A function that recieves the user's
+            input as an argument. Return `true` for valid input, a string message
+            for invalid input, or `false` for a default message. Equivalent to
+            the 	`question.validate` argument for the `#prompt` method, except
+            that it is also applied to a CLI argument, ensuring unity betwen the
+            two forms of input.
+    -   `config.allowed` **[function][21]** A function that recieves the current
+            `options` object and returns either `true` or `false`. If provided,
+            and false is returned, the CLI option will be ignored and no prompt
+            will be shown for it. Instead, its value will be equal to
+           `config.whenProhibited`. Use these two options in conjunction when an
+            option should not be configurable based on other options.
+    -   `config.whenProhibited` **([string][18] \| [boolean][22])** The value to use for
+            the option when `config.allowed` is provided and returns `false`.
+
 ### copyTemplate
 
 Copies a template file to the destination. Similar to `this.fs.CopyTpl`
@@ -50,11 +97,11 @@ except it takes relative paths and has sane defaults.
 
 #### Parameters
 
--   `templatePath` **[string][16]** Path to the template file in the templates
+-   `templatePath` **[string][18]** Path to the template file in the templates
       directory.
--   `destinationPath` **[string][16]** Path to the desination
+-   `destinationPath` **[string][18]** Path to the desination
       file in the destination directory. (optional, default `templatePath`)
--   `options` **[Object][18]** Data properties for the
+-   `options` **[Object][20]** Data properties for the
       template. (optional, default `this.options`)
 
 ### extendJson
@@ -65,12 +112,12 @@ function to change merging behavior as needed.
 
 #### Parameters
 
--   `destinationPath` **[string][16]** Path to the json file in the
+-   `destinationPath` **[string][18]** Path to the json file in the
       destination directory.
--   `contents` **[object][18]** Object with properties to merge into the json
+-   `contents` **[object][20]** Object with properties to merge into the json
       file.
--   `customizer` **[function][19]?** A customizer function, as accepted by
-      lodash [mergeWith][20]. If
+-   `customizer` **[function][21]?** A customizer function, as accepted by
+      lodash [mergeWith][23]. If
       omitted, this method will use a customizer that concatenates arrays
       occurring at the same property path, instead of simply overwriting the
       old array values with the new. (optional, default `concatArrays`)
@@ -82,9 +129,9 @@ Adds properties to tsconfig.json at the destination. Behaves exactly as
 
 #### Parameters
 
--   `contents` **[object][18]** Object with properties to merge into the
+-   `contents` **[object][20]** Object with properties to merge into the
      tsconfig.json file.
--   `customizer` **[function][19]?** Customizer function as described in
+-   `customizer` **[function][21]?** Customizer function as described in
       `#extendJson` (optional, default `concatArrays`)
 
 ### extendPackage
@@ -94,9 +141,9 @@ Adds properties to package.json at the destination. Behaves exactly as
 
 #### Parameters
 
--   `contents` **[object][18]** Object with properties to merge into the
+-   `contents` **[object][20]** Object with properties to merge into the
      package.json file.
--   `customizer` **[function][19]?** Customizer function as described in
+-   `customizer` **[function][21]?** Customizer function as described in
       `#extendJson` (optional, default `concatArrays`)
 
 ### addScripts
@@ -107,9 +154,9 @@ name that already exists is appended to the existing script with a
 
 #### Parameters
 
--   `scripts` **[object][18]** Object with script strings to add, keyed by the
+-   `scripts` **[object][20]** Object with script strings to add, keyed by the
       script name.
--   `prepend` **[boolean][21]** Set true to prepend to existing
+-   `prepend` **[boolean][22]** Set true to prepend to existing
       scripts instead of appending. Will likewise use `&&` as a separator. (optional, default `false`)
 
 [1]: #generator
@@ -120,36 +167,40 @@ name that already exists is appended to the existing script with a
 
 [4]: #destinationname
 
-[5]: #copytemplate
+[5]: #optionprompt
 
 [6]: #parameters-1
 
-[7]: #extendjson
+[7]: #copytemplate
 
 [8]: #parameters-2
 
-[9]: #extendtsconfig
+[9]: #extendjson
 
 [10]: #parameters-3
 
-[11]: #extendpackage
+[11]: #extendtsconfig
 
 [12]: #parameters-4
 
-[13]: #addscripts
+[13]: #extendpackage
 
 [14]: #parameters-5
 
-[15]: https://yeoman.github.io/generator/Generator.html
+[15]: #addscripts
 
-[16]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String
+[16]: #parameters-6
 
-[17]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array
+[17]: https://yeoman.github.io/generator/Generator.html
 
-[18]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object
+[18]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String
 
-[19]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function
+[19]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array
 
-[20]: https://lodash.com/docs/4.17.11#mergeWith
+[20]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object
 
-[21]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean
+[21]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function
+
+[22]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean
+
+[23]: https://lodash.com/docs/4.17.11#mergeWith
