@@ -2,32 +2,33 @@
 
 ### Table of Contents
 
--   [Generator][1]
-    -   [Parameters][2]
-    -   [Examples][3]
-    -   [destinationName][4]
-    -   [optionPrompt][5]
-        -   [Parameters][6]
-    -   [copyTemplate][7]
-        -   [Parameters][8]
-    -   [extendJson][9]
+-   [Generator][2]
+    -   [Parameters][3]
+    -   [Examples][4]
+    -   [destinationName][5]
+    -   [optionPrompt][6]
+        -   [Parameters][7]
+    -   [prompting][8]
+    -   [copyTemplate][9]
         -   [Parameters][10]
-    -   [extendTsConfig][11]
+    -   [extendJson][11]
         -   [Parameters][12]
-    -   [extendPackage][13]
+    -   [extendTsConfig][13]
         -   [Parameters][14]
-    -   [addScripts][15]
+    -   [extendPackage][15]
         -   [Parameters][16]
+    -   [addScripts][17]
+        -   [Parameters][18]
 
 ## Generator
 
-A replacement [Generator][17]
+A replacement [Generator][19]
 class with extensions, to be used as a base class for actual generators.
 
 ### Parameters
 
--   `args` **([string][18] \| [Array][19])** Generator arguments.
--   `opts` **[Object][20]** Generator options.
+-   `args` **([string][20] \| [Array][21])** Generator arguments.
+-   `opts` **[Object][22]** Generator options.
 
 ### Examples
 
@@ -54,41 +55,52 @@ not provided, in the same order they were registered.
 
 #### Parameters
 
--   `config` **[Object][20]** 
-    -   `config.name` **[string][18]** The option name. Equivalent to the `name`
+-   `config` **[Object][22]** 
+    -   `config.name` **[string][20]** The option name. Equivalent to the `name`
            argument of the `#option` method and the `question.name` argument of
            the `#prompt` method.
-    -   `config.type` **[string][18]** The prompt type to show, either 'input'
+    -   `config.type` **[string][20]** The prompt type to show, either 'input'
            or 'confirm'. This will be mapped to a corresponding option type for
            CLI usage.
-    -   `config.alias` **[string][18]** Short option name for CLI usage.
+    -   `config.alias` **[string][20]** Short option name for CLI usage.
            Equivalent to `config.alias` on the `#option` method.
-    -   `config.description` **[string][18]** Full description of the option for
+    -   `config.description` **[string][20]** Full description of the option for
            the CLI `-h` and `--help` flags. Equivalent to `config.description` on
            the `#option` method.
-    -   `config.message` **[string][18]** Message to show the user when
+    -   `config.message` **[string][20]** Message to show the user when
            prompting for the option. This should be similar to
            `config.description`, except phrased as an instruction or question.
            Equivalent to the `question.message` argument for the `#prompt`
            method.
-    -   `config.default` **([function][21] \| [string][18] \| [boolean][22])** A default value for
+    -   `config.default` **([function][23] \| [string][20] \| [boolean][24])** A default value for
             the prompt, or a function that returns or resolves with one.
             Equivalent to the `question.default` argument for the `#prompt`
             method, except that a function does not recieve any arguments.
-    -   `config.validate` **[function][21]** A function that recieves the user's
+    -   `config.validate` **[function][23]** A function that recieves the user's
             input as an argument. Return `true` for valid input, a string message
             for invalid input, or `false` for a default message. Equivalent to
             the 	`question.validate` argument for the `#prompt` method, except
             that it is also applied to a CLI argument, ensuring unity betwen the
             two forms of input.
-    -   `config.allowed` **[function][21]** A function that recieves the current
+    -   `config.allowed` **[function][23]** A function that recieves the current
             `options` object and returns either `true` or `false`. If provided,
             and false is returned, the CLI option will be ignored and no prompt
             will be shown for it. Instead, its value will be equal to
            `config.whenProhibited`. Use these two options in conjunction when an
             option should not be configurable based on other options.
-    -   `config.whenProhibited` **([string][18] \| [boolean][22])** The value to use for
+    -   `config.whenProhibited` **([string][20] \| [boolean][24])** The value to use for
             the option when `config.allowed` is provided and returns `false`.
+
+### prompting
+
+Prompts for any missing options defined by `#optionPrompt`. This is
+re-assigned onto the prototype of any subclass, and will run before other
+tasks since Yeoman [prioritizes it based on its name][1]. If you need
+other prompts to be shown with this priority, override this method and
+place `await super.prompting()` either before or after your additional
+prompts.
+
+[1]: https://yeoman.io/authoring/running-context.html#the-run-loop
 
 ### copyTemplate
 
@@ -97,11 +109,11 @@ except it takes relative paths and has sane defaults.
 
 #### Parameters
 
--   `templatePath` **[string][18]** Path to the template file in the templates
+-   `templatePath` **[string][20]** Path to the template file in the templates
       directory.
--   `destinationPath` **[string][18]** Path to the desination
+-   `destinationPath` **[string][20]** Path to the desination
       file in the destination directory. (optional, default `templatePath`)
--   `options` **[Object][20]** Data properties for the
+-   `options` **[Object][22]** Data properties for the
       template. (optional, default `this.options`)
 
 ### extendJson
@@ -112,12 +124,12 @@ function to change merging behavior as needed.
 
 #### Parameters
 
--   `destinationPath` **[string][18]** Path to the json file in the
+-   `destinationPath` **[string][20]** Path to the json file in the
       destination directory.
--   `contents` **[object][20]** Object with properties to merge into the json
+-   `contents` **[object][22]** Object with properties to merge into the json
       file.
--   `customizer` **[function][21]?** A customizer function, as accepted by
-      lodash [mergeWith][23]. If
+-   `customizer` **[function][23]?** A customizer function, as accepted by
+      lodash [mergeWith][25]. If
       omitted, this method will use a customizer that concatenates arrays
       occurring at the same property path, instead of simply overwriting the
       old array values with the new. (optional, default `concatArrays`)
@@ -129,9 +141,9 @@ Adds properties to tsconfig.json at the destination. Behaves exactly as
 
 #### Parameters
 
--   `contents` **[object][20]** Object with properties to merge into the
+-   `contents` **[object][22]** Object with properties to merge into the
      tsconfig.json file.
--   `customizer` **[function][21]?** Customizer function as described in
+-   `customizer` **[function][23]?** Customizer function as described in
       `#extendJson` (optional, default `concatArrays`)
 
 ### extendPackage
@@ -141,9 +153,9 @@ Adds properties to package.json at the destination. Behaves exactly as
 
 #### Parameters
 
--   `contents` **[object][20]** Object with properties to merge into the
+-   `contents` **[object][22]** Object with properties to merge into the
      package.json file.
--   `customizer` **[function][21]?** Customizer function as described in
+-   `customizer` **[function][23]?** Customizer function as described in
       `#extendJson` (optional, default `concatArrays`)
 
 ### addScripts
@@ -154,53 +166,55 @@ name that already exists is appended to the existing script with a
 
 #### Parameters
 
--   `scripts` **[object][20]** Object with script strings to add, keyed by the
+-   `scripts` **[object][22]** Object with script strings to add, keyed by the
       script name.
--   `prepend` **[boolean][22]** Set true to prepend to existing
+-   `prepend` **[boolean][24]** Set true to prepend to existing
       scripts instead of appending. Will likewise use `&&` as a separator. (optional, default `false`)
 
-[1]: #generator
+[2]: #generator
 
-[2]: #parameters
+[3]: #parameters
 
-[3]: #examples
+[4]: #examples
 
-[4]: #destinationname
+[5]: #destinationname
 
-[5]: #optionprompt
+[6]: #optionprompt
 
-[6]: #parameters-1
+[7]: #parameters-1
 
-[7]: #copytemplate
+[8]: #prompting
 
-[8]: #parameters-2
+[9]: #copytemplate
 
-[9]: #extendjson
+[10]: #parameters-2
 
-[10]: #parameters-3
+[11]: #extendjson
 
-[11]: #extendtsconfig
+[12]: #parameters-3
 
-[12]: #parameters-4
+[13]: #extendtsconfig
 
-[13]: #extendpackage
+[14]: #parameters-4
 
-[14]: #parameters-5
+[15]: #extendpackage
 
-[15]: #addscripts
+[16]: #parameters-5
 
-[16]: #parameters-6
+[17]: #addscripts
 
-[17]: https://yeoman.github.io/generator/Generator.html
+[18]: #parameters-6
 
-[18]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String
+[19]: https://yeoman.github.io/generator/Generator.html
 
-[19]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array
+[20]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String
 
-[20]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object
+[21]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array
 
-[21]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function
+[22]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object
 
-[22]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean
+[23]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function
 
-[23]: https://lodash.com/docs/4.17.11#mergeWith
+[24]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean
+
+[25]: https://lodash.com/docs/4.17.11#mergeWith
