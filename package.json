@@ -3,7 +3,7 @@
 	"version": "0.2.0",
 	"description": "Helpers for Batterii Yeoman generators",
 	"author": "Batterii, LLC",
-	"license": "UNLICENSED",
+	"license": "MIT",
 	"repository": "github:Batterii/yeoman-helpers",
 	"files": [
 		"lib"
