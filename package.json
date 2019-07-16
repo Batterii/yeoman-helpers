@@ -19,12 +19,12 @@
 	},
 	"dependencies": {
 		"decamelize": "^3.2.0",
-		"lodash": "^4.17.11",
+		"lodash": "^4.17.14",
 		"yeoman-generator": "^4.0.1"
 	},
 	"devDependencies": {
-		"@batterii/eslint-config-node": "^1.0.5",
-		"documentation": "^11.0.0",
+		"@batterii/eslint-config-node": "^1.1.0",
+		"documentation": "^12.0.1",
 		"eslint": "^5.16.0"
 	}
 }
