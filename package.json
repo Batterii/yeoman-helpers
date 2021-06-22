@@ -23,7 +23,7 @@
 	},
 	"devDependencies": {
 		"@batterii/eslint-config-node": "^3.0.0",
-		"documentation": "^12.1.4",
+		"documentation": "^13.2.5",
 		"eslint": "^7.29.0"
 	}
 }
